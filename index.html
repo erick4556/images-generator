@@ -1,0 +1,165 @@
+<html lang="en" class="h-full">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Images generator</title>
+  <link href="/reset.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    html {
+      font-size: 62.5%;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .container {
+      /* Para poder moverlo donde quiera */
+      position: absolute;
+      padding: 2rem;
+      max-width: 30%;
+    }
+
+    .title {
+      font-size: 3rem;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: baseline;
+    }
+
+    .partOfText {
+      margin-top: 2rem;
+      padding: 1rem 2rem
+    }
+
+    .image {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <img class="image" alt="" />
+  <div class="container">
+    <h1 class="title"></h1>
+  </div>
+
+</body>
+
+<script>
+  const colors = [
+    ["#f96167", "#fce77d"],
+    ["#f9d342", "#292826"],
+    ["#df678c", "#3d155f"],
+    ["#ccf381", "#4831d4"],
+    ["#4a274f", "#f0a07c"],
+    ["#ef5455", "#fad744"],
+    ["#ef5455", "#2b3252"],
+    ["#fff748", "#3c1a5b"],
+    ["#2f3c7e", "#fbeaeb"],
+    ["#ec4d37", "#1d1b1b"],
+    ["#8bd8bd", "#243665"],
+    ["#141a46", "#ec8b5e"],
+    ["#295f2d", "#ffe67c"],
+    ["#f4a950", "#161b21"],
+    ["#eb2188", "#080a52"],
+    ["#d2302c", "#f7f7f9"],
+  ];
+
+  const container = document.querySelector(".container");
+  const title = document.querySelector(".title");
+  const image = document.querySelector(".image");
+
+  const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min) + min);
+
+  const getColors = () => {
+    const coupleColors = colors[getRandomNumber(0, colors.length)];
+    let fontColor, containerColor;
+
+    if (Math.random > 0.5) {
+      fontColor = coupleColors[0];
+      containerColor = coupleColors[1];
+    } else {
+      fontColor = coupleColors[1];
+      containerColor = coupleColors[0];
+    }
+
+    return {
+      fontColor,
+      containerColor
+    };
+
+  }
+
+  const setImage = () => {
+    image.src = "https://source.unsplash.com/featured?adventure";
+  }
+
+  const setText = (message = "No te pierdas esta aventura") => {
+    const words = message.split(" ");
+    const groupWords = [];
+
+    while (words.length > 0) {
+      const cut = getRandomNumber(1, words.length);
+      groupWords.push(words.splice(0, cut))
+    }
+
+    title.innerHTML = groupWords.map((group) => {
+      return `<span class="partOfText">${group.join(' ')}</span>`
+    }).join('')
+
+  }
+
+  const setStyles = () => {
+    const colors = getColors();
+    document.querySelectorAll(".partOfText").forEach((group) => {
+      group.style.backgroundColor = colors.containerColor;
+    })
+
+    title.style.color = colors.fontColor
+    title.style.fontSize = `${getRandomNumber(4, 10)}rem`;
+  }
+
+  const moveContainer = () => {
+    const positions = [{
+        top: "2rem",
+        left: "2rem"
+      },
+      {
+        top: "2rem",
+        right: "2rem"
+      },
+      {
+        bottom: "2rem",
+        left: "2rem"
+      },
+      {
+        bottom: "2rem",
+        right: "2rem"
+      }
+    ]
+
+    const position = positions[getRandomNumber(0, positions.length)];
+
+    //Pedir todos los keys de ese objeto
+    Object.keys(position).forEach((key) => {
+      container.style[key] = position[key];
+    })
+
+    container.style.transform = `rotate(${getRandomNumber(-10, 10)}deg)`;
+
+  }
+  setImage()
+  setText()
+  setStyles()
+  moveContainer()
+</script>
+
+</html>

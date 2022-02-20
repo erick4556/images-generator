@@ -1,0 +1,17 @@
+{
+  "name": "images-generator",
+  "version": "1.0.0",
+  "description": "Images generator",
+  "main": "index.js",
+  "scripts": {
+    "build": "parcel build index.html",
+    "start": "parcel serve index.html"
+  },
+  "author": "Erick Cedeño",
+  "license": "ISC",
+  "dependencies": {
+    "parcel": "^2.3.2",
+    "puppeteer": "^3.3.0",
+    "uuid": "^8.3.2"
+  }
+}
